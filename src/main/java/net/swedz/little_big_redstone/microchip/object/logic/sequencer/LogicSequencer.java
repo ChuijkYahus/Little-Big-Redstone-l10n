@@ -28,6 +28,7 @@ public final class LogicSequencer extends LogicComponent<LogicSequencer, LogicSe
 					LogicSequencerConfig.CODEC.fieldOf("config").forGetter(LogicSequencer::config),
 					DyeColor.CODEC.optionalFieldOf("color").forGetter(LogicSequencer::color),
 					Codec.LONG.optionalFieldOf("processed_ticks", 1L).forGetter(LogicSequencer::processedTicks),
+					Codec.INT.optionalFieldOf("last_input", 0).forGetter((l) -> l.lastInput),
 					Codec.BOOL.optionalFieldOf("output", false).forGetter(LogicSequencer::output)
 			)
 			.apply(instance, LogicSequencer::new));
@@ -36,31 +37,36 @@ public final class LogicSequencer extends LogicComponent<LogicSequencer, LogicSe
 			LogicSequencerConfig.STREAM_CODEC, LogicSequencer::config,
 			ByteBufCodecs.optional(DyeColor.STREAM_CODEC), LogicSequencer::color,
 			ByteBufCodecs.VAR_LONG, LogicSequencer::processedTicks,
+			ByteBufCodecs.VAR_INT, (l) -> l.lastInput,
 			ByteBufCodecs.BOOL, LogicSequencer::output,
 			LogicSequencer::new
 	);
 	
 	private long processedTicks;
 	
+	private int lastInput;
+	
 	private boolean outputState;
 	
-	private LogicSequencer(LogicSequencerConfig config, Optional<DyeColor> color, long processedTicks, boolean outputState)
+	private LogicSequencer(LogicSequencerConfig config, Optional<DyeColor> color, long processedTicks, int lastInput, boolean outputState)
 	{
 		super(config, color);
 		this.processedTicks = processedTicks;
+		this.lastInput = lastInput;
 		this.outputState = outputState;
 	}
 	
-	private LogicSequencer(Optional<DyeColor> color, long processedTicks, boolean outputState)
+	private LogicSequencer(Optional<DyeColor> color, long processedTicks, int lastInput, boolean outputState)
 	{
 		super(color);
 		this.processedTicks = processedTicks;
+		this.lastInput = lastInput;
 		this.outputState = outputState;
 	}
 	
 	public LogicSequencer()
 	{
-		this(Optional.empty(), 0, false);
+		this(Optional.empty(), 0, 0, false);
 	}
 	
 	@Override
@@ -80,19 +86,20 @@ public final class LogicSequencer extends LogicComponent<LogicSequencer, LogicSe
 	}
 	
 	@Override
-	protected void processTickInternal(LogicContext context, boolean[] inputs)
+	protected void processTickInternal(LogicContext context, int[] inputs)
 	{
 		long originalProcessedTicks = processedTicks;
 		boolean originalOutputState = outputState;
-		boolean input = inputs[0];
+		boolean input = inputs[0] > 0;
 		boolean output = false;
 		
-		if(config.resetPort && inputs[1])
+		if(config.resetPort && inputs[1] > 0)
 		{
 			processedTicks = 0;
 		}
 		else
 		{
+			lastInput = inputs[0];
 			if(input)
 			{
 				processedTicks++;
@@ -130,14 +137,14 @@ public final class LogicSequencer extends LogicComponent<LogicSequencer, LogicSe
 	}
 	
 	@Override
-	protected boolean outputInternal(int index)
+	protected int outputInternal(int index)
 	{
-		return outputState;
+		return outputState ? lastInput : 0;
 	}
 	
 	public boolean output()
 	{
-		return this.output(0);
+		return this.output(0) > 0;
 	}
 	
 	@Override
