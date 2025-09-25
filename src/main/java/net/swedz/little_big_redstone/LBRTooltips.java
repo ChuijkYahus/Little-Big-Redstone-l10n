@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.swedz.little_big_redstone.microchip.object.logic.config.LogicComparisonMode;
+import net.swedz.little_big_redstone.microchip.object.logic.math.MathOperationType;
 import net.swedz.little_big_redstone.microchip.object.logic.reader.LogicReaderMode;
 import net.swedz.little_big_redstone.microchip.object.logic.selector.LogicSelectorMode;
 import net.swedz.little_big_redstone.microchip.object.logic.sequencer.LogicSequencerMode;
@@ -49,6 +50,12 @@ public final class LBRTooltips
 		case WEST -> LBRText.DIRECTION_WEST;
 		case EAST -> LBRText.DIRECTION_EAST;
 	}).text().withStyle(directionStyle(direction));
+	
+	public static final Parser<MathOperationType> MATH_OPERATION_PARSER = (type) -> (switch (type)
+	{
+		case ADDITION -> LBRText.LOGIC_CONFIG_MATH_OPERATION_ADDITION;
+		case SUBTRACTION -> LBRText.LOGIC_CONFIG_MATH_OPERATION_SUBTRACTION;
+	}).text().withStyle(HIGHLIGHT_STYLE);
 	
 	public static final Parser<Boolean> BOOLEAN_YES_NO_PARSER = (value) -> value ? LBRText.YES.text().withStyle(YES_STYLE) : LBRText.NO.text().withStyle(NO_STYLE);
 	

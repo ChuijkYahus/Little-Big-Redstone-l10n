@@ -6,7 +6,7 @@
       "chars": [
         "a"
       ],
-      "file": "little_big_redstone:font/logic/pulse_throttler.png",
+      "file": "little_big_redstone:font/logic/sequencer.png",
       "height": 7
     },
     {
@@ -15,7 +15,7 @@
       "chars": [
         "b"
       ],
-      "file": "little_big_redstone:font/logic/selector.png",
+      "file": "little_big_redstone:font/logic/pulse_throttler.png",
       "height": 7
     },
     {
@@ -24,7 +24,7 @@
       "chars": [
         "c"
       ],
-      "file": "little_big_redstone:font/logic/randomizer.png",
+      "file": "little_big_redstone:font/logic/selector.png",
       "height": 7
     },
     {
@@ -33,7 +33,7 @@
       "chars": [
         "d"
       ],
-      "file": "little_big_redstone:font/logic/t_flip_flop.png",
+      "file": "little_big_redstone:font/logic/randomizer.png",
       "height": 7
     },
     {
@@ -41,6 +41,15 @@
       "ascent": 7,
       "chars": [
         "e"
+      ],
+      "file": "little_big_redstone:font/logic/t_flip_flop.png",
+      "height": 7
+    },
+    {
+      "type": "bitmap",
+      "ascent": 7,
+      "chars": [
+        "f"
       ],
       "file": "little_big_redstone:font/logic/rs_nor_latch.png",
       "height": 7
@@ -123,7 +132,7 @@
       "chars": [
         "8"
       ],
-      "file": "little_big_redstone:font/logic/reader.png",
+      "file": "little_big_redstone:font/logic/calculator.png",
       "height": 7
     },
     {
@@ -132,7 +141,7 @@
       "chars": [
         "9"
       ],
-      "file": "little_big_redstone:font/logic/sequencer.png",
+      "file": "little_big_redstone:font/logic/reader.png",
       "height": 7
     }
   ]

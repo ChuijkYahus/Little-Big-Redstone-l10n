@@ -2,7 +2,9 @@ package net.swedz.little_big_redstone.gui.microchip.logic;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import net.swedz.little_big_redstone.LBR;
 import net.swedz.little_big_redstone.gui.microchip.logic.renderer.IORenderer;
+import net.swedz.little_big_redstone.gui.microchip.logic.renderer.CalculatorLogicRenderer;
 import net.swedz.little_big_redstone.gui.microchip.logic.renderer.OnOffLogicRenderer;
 import net.swedz.little_big_redstone.gui.microchip.logic.renderer.SequencerRenderer;
 import net.swedz.little_big_redstone.gui.microchip.logic.renderer.SimpleLogicRenderer;
@@ -32,6 +34,8 @@ public final class LogicRenderers
 		register(LogicTypes.NOR, SimpleLogicRenderer::new);
 		register(LogicTypes.XOR, SimpleLogicRenderer::new);
 		
+		register(LogicTypes.CALCULATOR, CalculatorLogicRenderer::new);
+		
 		register(LogicTypes.READER, SimpleLogicRenderer::new);
 		
 		register(LogicTypes.SEQUENCER, SequencerRenderer::new);
@@ -46,6 +50,24 @@ public final class LogicRenderers
 	public static void init()
 	{
 		RENDERERS = createRenderers();
+		assertAllTypesAreRegistered();
+	}
+	
+	private static void assertAllTypesAreRegistered()
+	{
+		boolean missing = false;
+		for(var type : LogicTypes.values())
+		{
+			if(!RENDERERS.containsKey(type))
+			{
+				missing = true;
+				LBR.LOGGER.error("Did not register renderer for logic type {}, did you forget?", type.id());
+			}
+		}
+		if(missing)
+		{
+			throw new IllegalStateException("Missing renderers for some logic types");
+		}
 	}
 	
 	private static <L extends LogicComponent> void register(LogicType<L> type, LogicRendererProvider<L> provider)

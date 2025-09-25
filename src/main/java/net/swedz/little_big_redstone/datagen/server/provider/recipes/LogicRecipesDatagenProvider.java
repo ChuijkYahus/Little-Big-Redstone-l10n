@@ -96,6 +96,11 @@ public final class LogicRecipesDatagenProvider extends RecipeProvider
 				.define('1', LBRItems.valueOf("and_gate"))
 				.define('2', LBRItems.valueOf("nor_gate")));
 		
+		logicComponent(output, LogicTypes.CALCULATOR, (b) -> b
+				.pattern("GG ")
+				.pattern("QrR")
+				.pattern("GG "));
+		
 		logicComponent(output, LogicTypes.READER, (b) -> b
 				.pattern("R  ")
 				.pattern("QrR")

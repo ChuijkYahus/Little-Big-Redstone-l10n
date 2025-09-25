@@ -19,6 +19,7 @@ import net.swedz.little_big_redstone.microchip.object.logic.gate.XORGate;
 import net.swedz.little_big_redstone.microchip.object.logic.io.LogicIO;
 import net.swedz.little_big_redstone.microchip.object.logic.latch.rs.RSNORLatch;
 import net.swedz.little_big_redstone.microchip.object.logic.latch.tflipflop.TFlipFlop;
+import net.swedz.little_big_redstone.microchip.object.logic.math.Calculator;
 import net.swedz.little_big_redstone.microchip.object.logic.pulse.PulseThrottler;
 import net.swedz.little_big_redstone.microchip.object.logic.randomizer.LogicRandomizer;
 import net.swedz.little_big_redstone.microchip.object.logic.reader.LogicReader;
@@ -55,6 +56,8 @@ public final class LogicTypes
 	public static final LogicType<ORGate>   OR   = registerGate("or", "OR", ORGate.CODEC, ORGate.STREAM_CODEC, ORGate::new);
 	public static final LogicType<NORGate>  NOR  = registerGate("nor", "NOR", NORGate.CODEC, NORGate.STREAM_CODEC, NORGate::new);
 	public static final LogicType<XORGate>  XOR  = registerGate("xor", "XOR", XORGate.CODEC, XORGate.STREAM_CODEC, XORGate::new);
+	
+	public static final LogicType<Calculator> CALCULATOR = register("calculator", "Calculator", Calculator.CODEC, Calculator.STREAM_CODEC, Calculator::new);
 	
 	public static final LogicType<LogicReader> READER = register("reader", "Reader", LogicReader.CODEC, LogicReader.STREAM_CODEC, LogicReader::new);
 	

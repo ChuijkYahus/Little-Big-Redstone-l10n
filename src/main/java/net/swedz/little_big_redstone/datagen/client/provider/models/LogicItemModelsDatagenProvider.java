@@ -11,6 +11,7 @@ import net.swedz.little_big_redstone.LBRColors;
 import net.swedz.little_big_redstone.client.model.logic.LogicBakingModelData;
 import net.swedz.little_big_redstone.microchip.object.logic.LogicType;
 import net.swedz.little_big_redstone.microchip.object.logic.LogicTypes;
+import net.swedz.little_big_redstone.microchip.object.logic.math.MathOperationType;
 
 import java.util.Locale;
 import java.util.Set;
@@ -39,6 +40,14 @@ public final class LogicItemModelsDatagenProvider extends ItemModelProvider
 		this.logicComponent(LogicTypes.OR, BackgroundType.SQUARE, true);
 		this.logicComponent(LogicTypes.NOR, BackgroundType.SQUARE, true);
 		this.logicComponent(LogicTypes.XOR, BackgroundType.SQUARE, true);
+		
+		this.logicComponent(LogicTypes.CALCULATOR, BackgroundType.SQUARE, false, (b) ->
+		{
+			for(var type : MathOperationType.values())
+			{
+				b.boardTexture(type.textureName(), LBR.id("logic/calculator_%s".formatted(type.textureName())));
+			}
+		});
 		
 		this.logicComponent(LogicTypes.READER, BackgroundType.CIRCLE, true);
 		
