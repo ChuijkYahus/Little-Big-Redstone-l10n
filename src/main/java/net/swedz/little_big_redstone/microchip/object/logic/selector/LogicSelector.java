@@ -143,12 +143,14 @@ public final class LogicSelector extends LogicComponent<LogicSelector, LogicSele
 	protected void internalLoadFrom(LogicSelector other)
 	{
 		selected = other.selected;
+		outputState = other.outputState;
 	}
 	
 	@Override
 	protected void internalResetForPickup()
 	{
 		selected = 0;
+		outputState = 0;
 	}
 	
 	@Override
